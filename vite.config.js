@@ -7,6 +7,7 @@ export default defineConfig(({mode}) => {
   const isDev = mode == 'development'
   return {
     root: './src',
+    publicDir: '../public',
     base: isDev ? '/' : `https://frontend25-26.github.io/${REPO_NAME}/`,
     plugins: [
       tailwindcss(),
@@ -16,7 +17,7 @@ export default defineConfig(({mode}) => {
       port: 3030,
     },
     build: {
-      outDir: './dist'
+      outDir: '../dist'
     },
     test: {
       dir: './tests/unit',
