@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+.card-tailwind.flipped .card-inner-tw {
+    transform: rotateY(180deg);
+}
+
+.card-title-tw {
+    transform: translateY(-100%);
+    padding: 15px;
+}
+
+.card-description-tw {
+    transform: translateY(100%);
+    padding: 15px;
+}
+
+.card-tailwind.flipped:hover .card-title-tw {
+    transform: translateY(0);
+}
+
+.card-tailwind.flipped:hover .card-overlay-tw {
+    opacity: 1;
+}
+
+.card-tailwind.flipped:hover .card-description-tw {
+    transform: translateY(0);
+}

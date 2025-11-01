@@ -1,11 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HW4 - Три кота</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./tailwind.css">
+    <link rel="stylesheet" href="./styles.scss">
 </head>
-<body>
 
+<body>
+    <div class="cards-container">
+        <div class="card-css3">
+            <div class="card-inner">
+                <div class="card-face card-back"></div>
+                <div class="card-face card-front">
+                    <div class="card-title"></div>
+                    <img src="" alt="Tarot card" class="card-image" width="270" height="500">
+                    <div class="card-overlay">
+                        <div class="card-actions">
+                            <button class="btn btn-like">
+                                <img src="./icons/1F5A4.svg" alt="Like" class="icon-img" width="35" height="35">
+                            </button>
+                            <button class="btn btn-icon">
+                                <img src="" alt="Card icon" class="icon-img" width="35" height="35">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-description"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-tailwind w-[270px] h-[500px] cursor-pointer [perspective:1000px]">
+            <div
+                class="card-inner-tw relative w-full h-full transition-transform duration-[0.8s] [transform-style:preserve-3d]">
+                <div
+                    class="card-face-tw absolute w-full h-full rounded-[15px] shadow-[0_10px_30px_rgba(0,0,0,0.5)] [backface-visibility:hidden] bg-gradient-to-br from-[#2d3561] to-[#1a1f3a] border-[3px] border-[#d4af37] flex items-center justify-center">
+                    <span class="text-6xl">✨</span>
+                </div>
+                <div
+                    class="card-face-tw card-front-tw absolute w-full h-full rounded-[15px] shadow-[0_10px_30px_rgba(0,0,0,0.5)] [backface-visibility:hidden] bg-[#1a1a2e] relative [transform:rotateY(180deg)]">
+                    <div
+                        class="card-title-tw absolute top-0 left-0 right-0 bg-transparent text-white text-[24px] font-['Viaoda_Libre',cursive] leading-[1.4] text-center transition-transform duration-300 rounded-t-[15px] [text-shadow:2px_2px_4px_rgba(0,0,0,0.8)] z-[1]">
+                    </div>
+                    <img src="" alt="Tarot card" class="card-image w-full h-full object-cover rounded-[15px]"
+                        width="270" height="500">
+                    <div
+                        class="card-overlay-tw absolute top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.7)] opacity-0 transition-opacity duration-300 rounded-[15px] pointer-events-none flex flex-col items-center justify-center gap-4">
+                        <div class="flex gap-4">
+                            <button
+                                class="card-btn-like w-[55px] h-[55px] border-2 border-white/30 rounded-full hover:scale-110 hover:border-white/50 transition-all duration-300 flex items-center justify-center pointer-events-auto cursor-pointer">
+                                <img src="./icons/1F5A4.svg" alt="Like" class="w-[35px] h-[35px]" width="35" height="35"
+                                    style="filter: brightness(0) invert(1);">
+                            </button>
+                            <button
+                                class="card-btn-icon w-[55px] h-[55px] border-2 border-white/30 rounded-full hover:scale-110 hover:border-white/50 transition-all duration-300 flex items-center justify-center pointer-events-auto cursor-pointer">
+                                <img src="" alt="Card icon" class="w-[35px] h-[35px]" width="35" height="35"
+                                    style="filter: brightness(0) invert(1);">
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="card-description-tw absolute bottom-0 left-0 right-0 bg-transparent text-white text-[20px] font-['Viaoda_Libre',cursive] leading-[1.4] transition-transform duration-300 rounded-b-[15px] [text-shadow:2px_2px_4px_rgba(0,0,0,0.8)]">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-scss">
+            <div class="card-inner">
+                <div class="card-face card-back"></div>
+                <div class="card-face card-front">
+                    <div class="card-title"></div>
+                    <img src="" alt="Tarot card" class="card-image" width="270" height="500">
+                    <div class="card-overlay">
+                        <div class="card-actions">
+                            <button class="btn btn-like">
+                                <img src="./icons/1F5A4.svg" alt="Like" class="icon-img" width="35" height="35">
+                            </button>
+                            <button class="btn btn-icon">
+                                <img src="" alt="Card icon" class="icon-img" width="35" height="35">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-description"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const response = await fetch('./cards/tarot-cards.json');
+            const tarotData = await response.json();
+
+            function getRandomCards(count) {
+                const shuffled = [...tarotData].sort(() => Math.random() - 0.5);
+                return shuffled.slice(0, count);
+            }
+
+            const randomCards = getRandomCards(3);
+
+            const css3Card = randomCards[0];
+            document.querySelector('.card-css3 .card-image').src = `./cards/${css3Card.filename}`;
+            document.querySelector('.card-css3 .card-title').textContent = css3Card.name;
+            document.querySelector('.card-css3 .card-description').textContent = css3Card.interpretation;
+            const css3IconBtn = document.querySelector('.card-css3 .btn-icon');
+            const css3IconImg = css3IconBtn.querySelector('.icon-img');
+            css3IconImg.src = `./icons/${css3Card.iconHexcode}.svg`;
+            css3IconImg.alt = css3Card.name;
+            const css3LikeBtn = document.querySelector('.card-css3 .btn-like');
+            if (css3Card.hexColors && css3Card.hexColors.length >= 2) {
+                css3IconBtn.style.background = `linear-gradient(135deg, ${css3Card.hexColors[0]}, ${css3Card.hexColors[1]})`;
+                css3LikeBtn.style.background = `linear-gradient(135deg, ${css3Card.hexColors[0]}, ${css3Card.hexColors[1]})`;
+            }
+
+            const tailwindCard = randomCards[1];
+            document.querySelector('.card-tailwind .card-image').src = `./cards/${tailwindCard.filename}`;
+            document.querySelector('.card-tailwind .card-title-tw').textContent = tailwindCard.name;
+            document.querySelector('.card-tailwind .card-description-tw').textContent = tailwindCard.interpretation;
+            const iconBtn = document.querySelector('.card-tailwind .card-btn-icon');
+            const iconImg = iconBtn.querySelector('img');
+            iconImg.src = `./icons/${tailwindCard.iconHexcode}.svg`;
+            iconImg.alt = tailwindCard.name;
+            const tailwindLikeBtn = document.querySelector('.card-tailwind .card-btn-like');
+            if (tailwindCard.hexColors && tailwindCard.hexColors.length >= 2) {
+                iconBtn.style.background = `linear-gradient(135deg, ${tailwindCard.hexColors[0]}, ${tailwindCard.hexColors[1]})`;
+                tailwindLikeBtn.style.background = `linear-gradient(135deg, ${tailwindCard.hexColors[0]}, ${tailwindCard.hexColors[1]})`;
+            }
+
+            const scssCard = randomCards[2];
+            document.querySelector('.card-scss .card-image').src = `./cards/${scssCard.filename}`;
+            document.querySelector('.card-scss .card-title').textContent = scssCard.name;
+            document.querySelector('.card-scss .card-description').textContent = scssCard.interpretation;
+            const scssIconBtn = document.querySelector('.card-scss .btn-icon');
+            const scssIconImg = scssIconBtn.querySelector('.icon-img');
+            scssIconImg.src = `./icons/${scssCard.iconHexcode}.svg`;
+            scssIconImg.alt = scssCard.name;
+            const scssLikeBtn = document.querySelector('.card-scss .btn-like');
+            if (scssCard.hexColors && scssCard.hexColors.length >= 2) {
+                scssIconBtn.style.background = `linear-gradient(135deg, ${scssCard.hexColors[0]}, ${scssCard.hexColors[1]})`;
+                scssLikeBtn.style.background = `linear-gradient(135deg, ${scssCard.hexColors[0]}, ${scssCard.hexColors[1]})`;
+            }
+
+            const cards = document.querySelectorAll('.card-css3, .card-tailwind, .card-scss');
+
+            cards.forEach(card => {
+                let flipped = false;
+                card.addEventListener('mouseenter', () => {
+                    if (!flipped) {
+                        card.classList.add('flipped');
+                        flipped = true;
+                    }
+                });
+            });
+        });
+    </script>
 </body>
+
 </html>

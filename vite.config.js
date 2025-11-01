@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
 
 import { REPO_NAME } from './config'
 
@@ -7,6 +8,9 @@ export default defineConfig(({mode}) => {
   return {
     root: './src',
     base: isDev ? '/' : `https://frontend25-26.github.io/${REPO_NAME}/`,
+    plugins: [
+      tailwindcss(),
+    ],
     server: {
       open: true,
       port: 3030,

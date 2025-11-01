@@ -1,0 +1,177 @@
+$card-width: 270px;
+$card-height: 500px;
+$border-radius: 15px;
+$gold: #d4af37;
+$bg-dark: #1a1a2e;
+$bg-gradient-start: #2d3561;
+$bg-gradient-end: #1a1f3a;
+$overlay-bg: rgba(0, 0, 0, 0.7);
+$btn-size: 55px;
+$btn-border: 2px;
+$btn-padding: 10px;
+$btn-font-size: 26px;
+$title-font-size: 24px;
+$desc-font-size: 20px;
+$text-padding: 15px;
+$line-height: 1.4;
+$text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+$transition-fast: 0.3s;
+$transition-slow: 0.8s;
+
+@mixin button-base {
+    width: $btn-size;
+    height: $btn-size;
+    border: $btn-border solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: $btn-font-size;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-fast;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1);
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+}
+
+.card-scss {
+    width: $card-width;
+    height: $card-height;
+    perspective: 1000px;
+    cursor: pointer;
+
+    .card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform $transition-slow;
+        transform-style: preserve-3d;
+    }
+
+    &.flipped .card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .card-face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: $border-radius;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-back {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, $bg-gradient-start 0%, $bg-gradient-end 100%);
+        border: 3px solid $gold;
+
+        &::before {
+            content: '✨';
+            font-size: 60px;
+        }
+    }
+
+    .card-front {
+        transform: rotateY(180deg);
+        background: $bg-dark;
+    }
+
+    .card-title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: transparent;
+        color: white;
+        padding: $text-padding;
+        font-size: $title-font-size;
+        font-family: 'Viaoda Libre', cursive;
+        line-height: $line-height;
+        text-align: center;
+        text-shadow: $text-shadow;
+        transform: translateY(-100%);
+        transition: transform $transition-fast;
+        border-radius: $border-radius $border-radius 0 0;
+        z-index: 1;
+    }
+
+    &.flipped:hover .card-title {
+        transform: translateY(0);
+    }
+
+    .card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: $border-radius;
+    }
+
+    .card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: $overlay-bg;
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: $text-padding;
+        border-radius: $border-radius;
+        transition: opacity $transition-fast;
+    }
+
+    &.flipped:hover .card-overlay {
+        opacity: 1;
+    }
+
+    .card-actions {
+        display: flex;
+        gap: $text-padding;
+
+        .btn {
+            @include button-base;
+
+            &.btn-icon,
+            &.btn-like {
+                padding: $btn-padding;
+            }
+        }
+    }
+
+    .icon-img {
+        width: 100%;
+        height: 100%;
+        filter: brightness(0) invert(1);
+    }
+
+    .card-description {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: transparent;
+        color: white;
+        padding: $text-padding;
+        font-size: $desc-font-size;
+        font-family: 'Viaoda Libre', cursive;
+        line-height: $line-height;
+        text-shadow: $text-shadow;
+        transform: translateY(100%);
+        transition: transform $transition-fast;
+        border-radius: 0 0 $border-radius $border-radius;
+    }
+
+    &.flipped:hover .card-description {
+        transform: translateY(0);
+    }
+}
