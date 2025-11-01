@@ -17,7 +17,7 @@ export default defineConfig(({mode}) => {
       port: 3030,
     },
     build: {
-      outDir: '../dist'
+      outDir: './dist'
     },
     test: {
       dir: './tests/unit',
