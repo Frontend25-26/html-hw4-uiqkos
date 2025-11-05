@@ -25,3 +25,7 @@
 .card-tailwind.flipped:hover .card-description-tw {
     transform: translateY(0);
 }
+
+.card-tailwind .card-gradient-bg {
+    background: var(--gradient-bg, rgba(255, 255, 255, 0.1));
+}

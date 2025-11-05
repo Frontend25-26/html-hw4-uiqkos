@@ -194,3 +194,12 @@ body {
 .card-css3.flipped:hover .card-description {
     transform: translateY(0);
 }
+
+.card-css3 .btn.card-gradient-bg {
+    background: var(--gradient-bg, rgba(255, 255, 255, 0.1));
+}
+
+.card-css3 .btn.card-gradient-bg:hover {
+    background: var(--gradient-bg, rgba(255, 255, 255, 0.1));
+    filter: brightness(1.1);
+}

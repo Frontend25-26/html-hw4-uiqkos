@@ -174,4 +174,13 @@ $transition-slow: 0.8s;
     &.flipped:hover .card-description {
         transform: translateY(0);
     }
+
+    .btn.card-gradient-bg {
+        background: var(--gradient-bg, rgba(255, 255, 255, 0.1));
+
+        &:hover {
+            background: var(--gradient-bg, rgba(255, 255, 255, 0.1));
+            filter: brightness(1.1);
+        }
+    }
 }

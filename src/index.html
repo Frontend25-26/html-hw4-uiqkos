@@ -40,7 +40,10 @@
             <div
                 class="card-inner-tw relative w-full h-full transition-transform duration-[0.8s] [transform-style:preserve-3d]">
                 <div
-                    class="card-face-tw absolute w-full h-full rounded-[15px] shadow-[0_10px_30px_rgba(0,0,0,0.5)] [backface-visibility:hidden] bg-gradient-to-br from-[#2d3561] to-[#1a1f3a] border-[3px] border-[#d4af37] flex items-center justify-center">
+                    class="card-face-tw absolute w-full h-full rounded-[15px]
+                           shadow-[0_10px_30px_rgba(0,0,0,0.5)] [backface-visibility:hidden]
+                           bg-gradient-to-br from-[#2d3561] to-[#1a1f3a]
+                           border-[3px] border-[#d4af37] flex items-center justify-center">
                     <span class="text-6xl">✨</span>
                 </div>
                 <div
@@ -55,13 +58,11 @@
                         <div class="flex gap-4">
                             <button
                                 class="card-btn-like w-[55px] h-[55px] border-2 border-white/30 rounded-full hover:scale-110 hover:border-white/50 transition-all duration-300 flex items-center justify-center pointer-events-auto cursor-pointer">
-                                <img src="./icons/1F5A4.svg" alt="Like" class="w-[35px] h-[35px]" width="35" height="35"
-                                    style="filter: brightness(0) invert(1);">
+                                <img src="./icons/1F5A4.svg" alt="Like" class="w-[35px] h-[35px] brightness-0 invert" width="35" height="35">
                             </button>
                             <button
                                 class="card-btn-icon w-[55px] h-[55px] border-2 border-white/30 rounded-full hover:scale-110 hover:border-white/50 transition-all duration-300 flex items-center justify-center pointer-events-auto cursor-pointer">
-                                <img src="" alt="Card icon" class="w-[35px] h-[35px]" width="35" height="35"
-                                    style="filter: brightness(0) invert(1);">
+                                <img src="" alt="Card icon" class="w-[35px] h-[35px] brightness-0 invert" width="35" height="35">
                             </button>
                         </div>
                     </div>
@@ -106,58 +107,59 @@
 
             const randomCards = getRandomCards(3);
 
-            const css3Card = randomCards[0];
-            document.querySelector('.card-css3 .card-image').src = `./cards/${css3Card.filename}`;
-            document.querySelector('.card-css3 .card-title').textContent = css3Card.name;
-            document.querySelector('.card-css3 .card-description').textContent = css3Card.interpretation;
-            const css3IconBtn = document.querySelector('.card-css3 .btn-icon');
-            const css3IconImg = css3IconBtn.querySelector('.icon-img');
-            css3IconImg.src = `./icons/${css3Card.iconHexcode}.svg`;
-            css3IconImg.alt = css3Card.name;
-            const css3LikeBtn = document.querySelector('.card-css3 .btn-like');
-            if (css3Card.hexColors && css3Card.hexColors.length >= 2) {
-                css3IconBtn.style.background = `linear-gradient(135deg, ${css3Card.hexColors[0]}, ${css3Card.hexColors[1]})`;
-                css3LikeBtn.style.background = `linear-gradient(135deg, ${css3Card.hexColors[0]}, ${css3Card.hexColors[1]})`;
+            function initializeCard(cardData, selector, selectors) {
+                const cardImage = document.querySelector(`${selector} .card-image`);
+                const cardTitle = document.querySelector(`${selector} ${selectors.title}`);
+                const cardDescription = document.querySelector(`${selector} ${selectors.description}`);
+                const iconBtn = document.querySelector(`${selector} ${selectors.iconBtn}`);
+                const iconImg = iconBtn.querySelector(selectors.iconImg);
+                const likeBtn = document.querySelector(`${selector} ${selectors.likeBtn}`);
+
+                cardImage.src = `./cards/${cardData.filename}`;
+                cardTitle.textContent = cardData.name;
+                cardDescription.textContent = cardData.interpretation;
+                iconImg.src = `./icons/${cardData.iconHexcode}.svg`;
+                iconImg.alt = cardData.name;
+
+                if (cardData.hexColors && cardData.hexColors.length >= 2) {
+                    const gradient = `linear-gradient(135deg, ${cardData.hexColors[0]}, ${cardData.hexColors[1]})`;
+                    iconBtn.style.setProperty('--gradient-bg', gradient);
+                    iconBtn.classList.add('card-gradient-bg');
+                    likeBtn.style.setProperty('--gradient-bg', gradient);
+                    likeBtn.classList.add('card-gradient-bg');
+                }
             }
 
-            const tailwindCard = randomCards[1];
-            document.querySelector('.card-tailwind .card-image').src = `./cards/${tailwindCard.filename}`;
-            document.querySelector('.card-tailwind .card-title-tw').textContent = tailwindCard.name;
-            document.querySelector('.card-tailwind .card-description-tw').textContent = tailwindCard.interpretation;
-            const iconBtn = document.querySelector('.card-tailwind .card-btn-icon');
-            const iconImg = iconBtn.querySelector('img');
-            iconImg.src = `./icons/${tailwindCard.iconHexcode}.svg`;
-            iconImg.alt = tailwindCard.name;
-            const tailwindLikeBtn = document.querySelector('.card-tailwind .card-btn-like');
-            if (tailwindCard.hexColors && tailwindCard.hexColors.length >= 2) {
-                iconBtn.style.background = `linear-gradient(135deg, ${tailwindCard.hexColors[0]}, ${tailwindCard.hexColors[1]})`;
-                tailwindLikeBtn.style.background = `linear-gradient(135deg, ${tailwindCard.hexColors[0]}, ${tailwindCard.hexColors[1]})`;
-            }
+            initializeCard(randomCards[0], '.card-css3', {
+                title: '.card-title',
+                description: '.card-description',
+                iconBtn: '.btn-icon',
+                iconImg: '.icon-img',
+                likeBtn: '.btn-like'
+            });
 
-            const scssCard = randomCards[2];
-            document.querySelector('.card-scss .card-image').src = `./cards/${scssCard.filename}`;
-            document.querySelector('.card-scss .card-title').textContent = scssCard.name;
-            document.querySelector('.card-scss .card-description').textContent = scssCard.interpretation;
-            const scssIconBtn = document.querySelector('.card-scss .btn-icon');
-            const scssIconImg = scssIconBtn.querySelector('.icon-img');
-            scssIconImg.src = `./icons/${scssCard.iconHexcode}.svg`;
-            scssIconImg.alt = scssCard.name;
-            const scssLikeBtn = document.querySelector('.card-scss .btn-like');
-            if (scssCard.hexColors && scssCard.hexColors.length >= 2) {
-                scssIconBtn.style.background = `linear-gradient(135deg, ${scssCard.hexColors[0]}, ${scssCard.hexColors[1]})`;
-                scssLikeBtn.style.background = `linear-gradient(135deg, ${scssCard.hexColors[0]}, ${scssCard.hexColors[1]})`;
-            }
+            initializeCard(randomCards[1], '.card-tailwind', {
+                title: '.card-title-tw',
+                description: '.card-description-tw',
+                iconBtn: '.card-btn-icon',
+                iconImg: 'img',
+                likeBtn: '.card-btn-like'
+            });
+
+            initializeCard(randomCards[2], '.card-scss', {
+                title: '.card-title',
+                description: '.card-description',
+                iconBtn: '.btn-icon',
+                iconImg: '.icon-img',
+                likeBtn: '.btn-like'
+            });
 
             const cards = document.querySelectorAll('.card-css3, .card-tailwind, .card-scss');
 
             cards.forEach(card => {
-                let flipped = false;
                 card.addEventListener('mouseenter', () => {
-                    if (!flipped) {
-                        card.classList.add('flipped');
-                        flipped = true;
-                    }
-                });
+                    card.classList.add('flipped');
+                }, { once: true });
             });
         });
     </script>
